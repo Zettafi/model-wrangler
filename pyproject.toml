@@ -1,0 +1,97 @@
+[project]
+name = "model-serve"
+description = "Serve AI models as an API with OPenAPI and SwaggerUI"
+readme = "README.md"
+requires-python = ">=3.8,<3.11"
+license = {file = "LICENSE"}
+authors = [
+    {name = "Adam L. Englander", email = "adam@zetta.fi"},
+]
+classifiers = [
+    "Programming Language :: Python :: 3",
+    "Development Status :: 5 - Production/Stable",
+    "Environment :: Web Environment",
+    "Intended Audience :: Information Technology",
+    "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
+    "Operating System :: OS Independent",
+    "Topic :: Scientific/Engineering :: Artificial Intelligence",
+    "Topic :: Scientific/Engineering :: Image Processing",
+    "Typing :: Typed",
+]
+dynamic = ["version"]
+dependencies = [
+    # Models
+    "diffusers[torch]~=0.17",
+    "transformers[torch]~=4.30",
+    "accelerate~=0.20",
+    "safetensors~=0.3",
+    "einops~=0.6",
+
+    # Server
+    "fastapi~=0.97",
+    "hypercorn~=0.14",
+    "click~=8.1",
+
+]
+
+[project.urls]
+Chat = "https://github.com/block-crawler/block-crawler/discussions"
+Documentation = "https://block-crawler.readthedocs.io"
+Changes = "https://github.com/block-crawler/block-crawler/blob/main/CHANGES.md"
+"Source Code" = "https://github.com/block-crawler/block-crawler"
+"Issue Tracker" = "https://github.com/block-crawler/block-crawler/issues/"
+
+[project.scripts]
+model-server = "modelserve.__main__:main"
+
+[project.optional-dependencies]
+dev = [
+    # runtime tools
+    "pre-commit~=3.0",
+    "tox~=4.4",
+
+    # static analysis
+    "black~=22.6",
+    "flake8~=4.0",
+    "flake8-gl-codeclimate~=0.1",
+    "mypy~=0.971",
+    "types-aioboto3~=9.6",
+    "types-psutil~=5.9",
+
+    # unit testing and coverage
+    "ddt~=1.5",
+    "coverage[toml]~=6.4",
+    "unittest-xml-reporting~=3.2",
+
+    # configuration
+    "python-dotenv~=0.20",
+]
+
+build = [
+    "build~=0.10",
+    "twine~=4.0",
+]
+
+[build-system]
+requires = ["setuptools"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools.packages.find]
+where = ["src"]
+
+[tool.setuptools.dynamic]
+version = {attr = "modelserve.__version__"}
+
+[tool.coverage.run]
+branch=true
+
+[tool.coverage.report]
+omit = ["test/*"]
+precision = 2
+
+[tool.black]
+line-length=100
+
+
+[tool.mypy]
+python_version = "3.10"

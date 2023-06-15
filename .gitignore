@@ -1,0 +1,16 @@
+*.egg-info
+.env
+*.pyc
+__pycache__
+/.coverage
+/unittest-report-xunit.xml
+/build/
+/coverage.xml
+/code-quality.json
+/.mypy_cache/
+/bin/
+*.csv
+*.log
+/.tox/
+/dist/
+/docshtml/
