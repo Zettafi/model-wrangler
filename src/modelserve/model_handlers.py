@@ -67,7 +67,7 @@ class ImageGenerateModelHandler(ModelHandler):
             item: tuple[UUID, ImageGenerateRequest] = self._request_queue.get()
             request_id, request = item
             try:
-                request_id, result = generator(request.input)
+                result = generator(request.input)
                 image: Image = result.images[0]
                 image_bytes_io = BytesIO()
                 image.save(image_bytes_io, format=request.format.value)

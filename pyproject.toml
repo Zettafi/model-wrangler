@@ -2,7 +2,7 @@
 name = "model-serve"
 description = "Serve AI models as an API with OPenAPI and SwaggerUI"
 readme = "README.md"
-requires-python = ">=3.8,<3.11"
+requires-python = ">=3.10"
 license = {file = "LICENSE"}
 authors = [
     {name = "Adam L. Englander", email = "adam@zetta.fi"},
