@@ -1,17 +1,19 @@
+"""Functions related to executing CLI requests"""
 import asyncio
 import contextlib
 import multiprocessing as mp
+import pathlib
 import queue
 from asyncio import Future
 from uuid import UUID
 
+from fastapi import FastAPI
 from hypercorn import Config as HypercornConfig
 from hypercorn.asyncio import serve as hypercorn_serve
-from fastapi import FastAPI
 from pydantic import BaseModel
 
 from . import __version__ as version
-from .model_handlers import ModelHandler
+from .model_handlers import ModelHandler, RunImageGenerateInput, RunGenerateInput
 from .request_handlers import RequestHandler
 
 
@@ -26,6 +28,36 @@ async def __responder(response_queue: mp.Queue, request_future_map_: dict[UUID, 
                 future.set_result(response)
         except queue.Empty:
             await asyncio.sleep(0)
+
+
+def run(
+    model_handler_class: type[ModelHandler],
+    model_identifier: str,
+    model_revision: str | None,
+    model_offload_folder,
+    input_text: str,
+):
+    """Run a model"""
+    model_handler = model_handler_class.create(
+        model=model_identifier,
+        revision=model_revision,
+        offload_folder=model_offload_folder,
+    )
+    model_handler.run(RunGenerateInput(input=input_text))
+
+
+def run_image_generate(
+    model_handler_class: type[ModelHandler],
+    model_identifier: str,
+    model_revision: str | None,
+    output_file: pathlib.Path,
+    input_text: str,
+):
+    """Run an image generation model"""
+    model_handler = model_handler_class.create(
+        model=model_identifier, revision=model_revision, offload_folder=None
+    )
+    model_handler.run(RunImageGenerateInput(input=input_text, output_file=output_file))
 
 
 def serve(
@@ -46,8 +78,6 @@ def serve(
         model=model_identifier,
         revision=model_revision,
         offload_folder=model_offload_folder,
-        request_queue=model_request_queue,
-        response_queue=model_response_queue,
     )
 
     request_future_map: dict[UUID, Future[BaseModel]] = {}
@@ -57,7 +87,11 @@ def serve(
     @contextlib.asynccontextmanager
     async def lifespan(_app: FastAPI):
         """FastAPI lifespan manages the threadpool executor"""
-        p = mp.Process(target=model_handler.start, name="Model Request Processor")
+        p = mp.Process(
+            target=model_handler.start,
+            args=(model_request_queue, model_response_queue),
+            name="Model Request Processor",
+        )
         p.start()
         responder_task = asyncio.get_event_loop().create_task(
             __responder(model_response_queue, request_future_map)

@@ -1,3 +1,4 @@
+"""Models"""
 from enum import Enum
 from typing import Annotated
 
@@ -8,6 +9,8 @@ class TextTransformRequest(BaseModel):
     input: Annotated[str, Field(min_length=1, description="Input text")]
 
     class Config:
+        """TextTransformRequest Config"""
+
         schema_extra = {
             "example": {
                 "input": "I am so sorry for being",
@@ -22,6 +25,8 @@ class TextTransformResponse(BaseModel):
     ]
 
     class Config:
+        """TextTransformResponse Config"""
+
         schema_extra = {
             "example": {
                 "generated_text": "I am so sorry for being so rude to you.",
@@ -46,6 +51,8 @@ class ImageGenerateRequest(BaseModel):
     ] = ImageFormat.png
 
     class Config:
+        """ImageGenerateRequest Config"""
+
         schema_extra = {
             "example": {
                 "input": "A cowboy riding a horse through the desert southwest",
@@ -61,6 +68,8 @@ class ImageGenerateResponse(BaseModel):
     format: Annotated[ImageFormat, Field(description="Format of the image")]
 
     class Config:
+        """ImageGenerateResponse Config"""
+
         schema_extra = {
             "example": {
                 "image": "QSBjb3dib3kgcmlkaW5nIGEgaG9yc2UgdGhyb3VnaCB0aGUgZGVzZXJ0IHNvdXRod2VzdAo",

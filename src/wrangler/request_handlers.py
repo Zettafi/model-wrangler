@@ -1,3 +1,4 @@
+"""Request Handlers"""
 import asyncio
 import queue
 from asyncio import Future
@@ -7,7 +8,7 @@ from uuid import UUID, uuid4
 
 from pydantic import BaseModel
 
-from modelserve.models import (
+from wrangler.models import (
     TextTransformRequest,
     TextTransformResponse,
     ImageGenerateRequest,

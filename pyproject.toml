@@ -1,6 +1,6 @@
 [project]
-name = "model-serve"
-description = "Serve AI models as an API with OPenAPI and SwaggerUI"
+name = "face-wrangler"
+description = "Utility to easily work with Hugging Face models"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -11,6 +11,7 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Development Status :: 5 - Production/Stable",
     "Environment :: Web Environment",
+    "Environment :: Console",
     "Intended Audience :: Information Technology",
     "License :: OSI Approved :: Mozilla Public License 2.0 (MPL 2.0)",
     "Operating System :: OS Independent",
@@ -30,19 +31,20 @@ dependencies = [
     # Server
     "fastapi~=0.97",
     "hypercorn~=0.14",
-    "click~=8.1",
 
+    # CLI
+    "click~=8.1",
 ]
 
 [project.urls]
-Chat = "https://github.com/block-crawler/block-crawler/discussions"
-Documentation = "https://block-crawler.readthedocs.io"
-Changes = "https://github.com/block-crawler/block-crawler/blob/main/CHANGES.md"
-"Source Code" = "https://github.com/block-crawler/block-crawler"
-"Issue Tracker" = "https://github.com/block-crawler/block-crawler/issues/"
+#Chat = ""
+#Documentation = ""
+#Changes = ""
+#"Source Code" = ""
+#"Issue Tracker" = ""
 
 [project.scripts]
-model-server = "modelserve.__main__:main"
+wrangler = "wrangler.__main__:main"
 
 [project.optional-dependencies]
 dev = [
@@ -80,7 +82,7 @@ build-backend = "setuptools.build_meta"
 where = ["src"]
 
 [tool.setuptools.dynamic]
-version = {attr = "modelserve.__version__"}
+version = {attr = "wrangler.__version__"}
 
 [tool.coverage.run]
 branch=true
