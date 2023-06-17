@@ -1,0 +1,40 @@
+{
+  "_class_name": "UniDiffuserPipeline",
+  "_diffusers_version": "0.17.0.dev0",
+  "clip_tokenizer": [
+    "transformers",
+    "CLIPTokenizer"
+  ],
+  "image_encoder": [
+    "transformers",
+    "CLIPVisionModelWithProjection"
+  ],
+  "image_processor": [
+    "transformers",
+    "CLIPImageProcessor"
+  ],
+  "scheduler": [
+    "diffusers",
+    "DPMSolverMultistepScheduler"
+  ],
+  "text_decoder": [
+    "unidiffuser",
+    "UniDiffuserTextDecoder"
+  ],
+  "text_encoder": [
+    "transformers",
+    "CLIPTextModel"
+  ],
+  "text_tokenizer": [
+    "transformers",
+    "GPT2Tokenizer"
+  ],
+  "unet": [
+    "unidiffuser",
+    "UniDiffuserModel"
+  ],
+  "vae": [
+    "diffusers",
+    "AutoencoderKL"
+  ]
+}

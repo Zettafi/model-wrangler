@@ -14,6 +14,7 @@ types-aioboto3~=9.6
 types-psutil~=5.9
 
 # unit testing and coverage
+httpx~=0.24
 ddt~=1.5
 coverage[toml]~=6.4
 unittest-xml-reporting~=3.2

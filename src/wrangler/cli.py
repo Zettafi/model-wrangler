@@ -106,8 +106,7 @@ def serve(
         version=version,
         description=f"**{service_name}:**\n\n"
         f"Model: {model_identifier}\n\n"
-        f"Revision: {model_revision}\n\n"
-        f"Handler Class: {model_handler_class.__module__}.{model_handler_class.__name__}",
+        f"Revision: {model_revision}\n\n",
     )
 
     # noinspection PyTypeChecker

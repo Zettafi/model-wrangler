@@ -1,0 +1,20 @@
+{
+  "_class_name": "DPMSolverMultistepScheduler",
+  "_diffusers_version": "0.17.0.dev0",
+  "algorithm_type": "dpmsolver++",
+  "beta_end": 0.012,
+  "beta_schedule": "scaled_linear",
+  "beta_start": 0.00085,
+  "dynamic_thresholding_ratio": 0.995,
+  "lambda_min_clipped": -Infinity,
+  "lower_order_final": true,
+  "num_train_timesteps": 1000,
+  "prediction_type": "epsilon",
+  "sample_max_value": 1.0,
+  "solver_order": 3,
+  "solver_type": "midpoint",
+  "thresholding": false,
+  "trained_betas": null,
+  "use_karras_sigmas": false,
+  "variance_type": null
+}

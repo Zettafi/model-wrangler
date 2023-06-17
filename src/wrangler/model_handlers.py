@@ -8,7 +8,6 @@ from pathlib import Path
 from uuid import UUID
 
 import click
-import torch
 from PIL.Image import Image
 from diffusers import DiffusionPipeline
 from transformers import AutoTokenizer, AutoModelForCausalLM
@@ -90,7 +89,7 @@ class ImageGenerateModelHandler(ModelHandler):
 
     def _get_pipeline(self) -> DiffusionPipeline:
         pipeline = DiffusionPipeline.from_pretrained(self._model, revision=self._revision)
-        pipeline = pipeline.to("cuda") if torch.cuda.is_available() else pipeline
+        pipeline = pipeline.to(pipeline.device)
         return pipeline
 
     @staticmethod
@@ -125,8 +124,9 @@ class ImageGenerateModelHandler(ModelHandler):
     def run(self, input_: RunImageGenerateInput) -> None:  # type: ignore[override]
         pipeline = self._get_pipeline()
         image = self._generate_image(pipeline, input_.input)
-        with input_.output_file.open("wb") as output_file:
-            image.save(output_file)
+        output_file: Path = Path(input_.output_file)  # Does nothing but makes testable
+        with output_file.open("wb") as output_fd:
+            image.save(output_fd)
 
     @classmethod
     def create(
@@ -162,7 +162,6 @@ class TextTransformModelHandler(ModelHandler):
             device_map="auto",
             offload_folder=self._offload_folder,
             trust_remote_code=True,
-            torch_dtype=torch.float16 if torch.cuda.is_available() else torch.bfloat16,
         )
         return model, tokenizer
 
@@ -171,10 +170,7 @@ class TextTransformModelHandler(ModelHandler):
         tensor = tokenizer(input_, return_tensors="pt", return_token_type_ids=False).to(
             model.device
         )
-        outputs = model.generate(
-            **tensor,
-            early_stopping=True,
-        )
+        outputs = model.generate(**tensor)
         results = [tokenizer.decode(output, skip_special_tokens=True) for output in outputs]
         return results
 
