@@ -56,15 +56,7 @@ class ServeConfig:
 @click.group(name="wrangler")
 def main():
     """
-    Server a version of a model as an API
-
-    MODEL_IDENTIFIER: Can be a path to the folder containing a built, cloned, or
-    downloaded model. It can also be an identifier in the Huggingface Hub.
-
-    MODEL_REVISION (optional): This is only relevant when MODEL_IDENTIFIER is an
-    identifier in the Huggingface Hub. The revision will be a commit hash or tag to
-    identify which revision of the model in the Huggingface Hub should be used. The
-    latest version available will be utilized when not provided.
+    Run or serve a model
     """
 
 
@@ -142,7 +134,9 @@ def text_transform_serve(
     """Text transform model action"""
 
     cli_serve(
-        service_name=config.service_name if config.service_name else "Text Transform Model Service",
+        service_name=config.service_name
+        if config.service_name
+        else "Text Transform Model Service",
         model_handler_class=TextTransformModelHandler,
         model_identifier=model_identifier.model,
         model_revision=model_identifier.revision,

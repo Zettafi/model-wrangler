@@ -1,6 +1,6 @@
 [project]
-name = "face-wrangler"
-description = "Utility to easily work with Hugging Face models"
+name = "zettafi-model-wrangler"
+description = "Utility to easily work with models"
 readme = "README.md"
 requires-python = ">=3.10"
 license = {file = "LICENSE"}
@@ -37,38 +37,14 @@ dependencies = [
 ]
 
 [project.urls]
-#Chat = ""
-#Documentation = ""
-#Changes = ""
-#"Source Code" = ""
-#"Issue Tracker" = ""
+Chat = "https://github.com/Zettafi/model-wrangler/discussions"
+"Source Code" = "https://github.com/Zettafi/model-wrangler"
+"Issue Tracker" = "https://github.com/Zettafi/model-wrangler/issues"
 
 [project.scripts]
 wrangler = "wrangler.__main__:main"
 
 [project.optional-dependencies]
-dev = [
-    # runtime tools
-    "pre-commit~=3.0",
-    "tox~=4.4",
-
-    # static analysis
-    "black~=22.6",
-    "flake8~=4.0",
-    "flake8-gl-codeclimate~=0.1",
-    "mypy~=0.971",
-    "types-aioboto3~=9.6",
-    "types-psutil~=5.9",
-
-    # unit testing and coverage
-    "ddt~=1.5",
-    "coverage[toml]~=6.4",
-    "unittest-xml-reporting~=3.2",
-
-    # configuration
-    "python-dotenv~=0.20",
-]
-
 build = [
     "build~=0.10",
     "twine~=4.0",
